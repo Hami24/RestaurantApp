@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pregled rezervacija</title>
+        <style>
+                 #footer
+                 {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    padding: 1rem;
+                    background-color: #efefef;
+                    text-align: center;
+                    height:50px;
+                 }
+        </style>
+    </h:head>
+    <h:body>
+        <b:navBar  brandHref="#"   fluid="true">
+        
+            <b:navbarLinks>
+                <b:navLink value="Početna" href="adminStranica.xhtml" icon="home"></b:navLink>
+                <b:dropMenu value="Korisnici" iconAwesome="user">
+                <b:navLink value="Dodaj korisnika" href="dodajKorisnika.xhtml"></b:navLink> 
+                <b:navLink value="Ispis korisnika" href="ispisKorisnika.xhtml"></b:navLink>
+                </b:dropMenu>
+                <b:dropMenu value="Rezervacije" iconAwesome="glass">
+                <b:navLink value="Prikaz rezervacija" href="ispisRezervacija.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Narudzbe" iconAwesome="envelope-o">
+                <b:navLink value="Prikaz narudzbi" href="ispisNarudzbi.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Jelovnik" iconAwesome="list-alt">
+                <b:navLink value="Prikaz jela" href="ispisJela.xhtml"></b:navLink>
+                <b:navLink value="Dodaj jelo" href="dodajJelo.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Stolovi" iconAwesome="list-alt">
+                <b:navLink value="Prikaz stolova" href="prikazStolova.xhtml"></b:navLink>
+                <b:navLink value="Dodaj stol" href="dodajStol.xhtml"></b:navLink>   
+                </b:dropMenu>
+            </b:navbarLinks>
+            <b:navbarLinks pull="right">
+                <b:navCommandLink iconAwesome="sign-out" value="Odjava" action="#{prijava.odjava()}" ></b:navCommandLink>
+                
+            </b:navbarLinks>
+       </b:navBar>
+        
+        <h2>Prikaz rezervacija</h2>
+        <h:form>
+            <b:dataTable  styleClass="table table-striped " id="korTable" var="k" value="#{rezervacije.rezervacije}">
+                <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="ID rezervacije"/>
+                     </f:facet>
+                     <h:outputText value="#{k.id_rezervacije}"/>
+                 </h:column> 
+                
+                <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Ime"/>
+                     </f:facet>
+                     <h:outputText value="#{k.ime}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Prezime"/>
+                     </f:facet>
+                     <h:outputText value="#{k.prezime}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Tip rezervacije:"/>
+                     </f:facet>
+                     <h:outputText value="#{k.naziv}"/>
+                 </h:column>
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Datum za koji vrijedi rezervacija:"/>
+                     </f:facet>
+                     <h:outputText value="#{k.datum}"/>
+                 </h:column>
+                <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Pocetak rezervacije:"/>
+                     </f:facet>
+                     <h:outputText value="#{k.vrijeme_pocetka}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Kraj rezervacije:"/>
+                     </f:facet>
+                     <h:outputText value="#{k.vrijeme_kraj}"/>
+                 </h:column>
+            </b:dataTable>
+        </h:form>
+        
+        <div id="footer">
+               Muhamed Handukić &copy; 2016
+            </div>
+        
+    </h:body>
+</html>
+

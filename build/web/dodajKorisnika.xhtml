@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Dodaj korisnika</title>
+            <style>
+                 #footer
+                 {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    padding: 1rem;
+                    background-color: #efefef;
+                    text-align: center;
+                    height:50px;
+                 }
+        </style>
+    </h:head>
+    <h:body>
+        <b:navBar  brandHref="#"   fluid="true">
+        
+            <b:navbarLinks>
+                <b:navLink value="Početna" href="adminStranica.xhtml" icon="home"></b:navLink>
+                <b:dropMenu value="Korisnici" iconAwesome="user">
+                <b:navLink value="Dodaj korisnika" href="dodajKorisnika.xhtml"></b:navLink>
+                <b:navLink value="Ispis korisnika" href="ispisKorisnika.xhtml"></b:navLink> 
+                </b:dropMenu>
+                <b:dropMenu value="Rezervacije" iconAwesome="glass">
+                <b:navLink value="Prikaz rezervacija" href="ispisRezervacija.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Narudzbe" iconAwesome="envelope-o">
+                <b:navLink value="Prikaz narudzbi" href="ispisNarudzbi.xhtml"></b:navLink>  
+                </b:dropMenu>
+                 <b:dropMenu value="Jelovnik" iconAwesome="list-alt">
+                <b:navLink value="Prikaz jela" href="ispisJela.xhtml"></b:navLink>
+                <b:navLink value="Dodaj jelo" href="dodajJelo.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Stolovi" iconAwesome="list-alt">
+                <b:navLink value="Prikaz stolova" href="prikazStolova.xhtml"></b:navLink>
+                <b:navLink value="Dodaj stol" href="dodajStol.xhtml"></b:navLink>   
+                </b:dropMenu>
+             </b:navbarLinks>
+              
+             <b:navbarLinks pull="right">
+                <b:navCommandLink iconAwesome="sign-out" value="Odjava" action="#{prijava.odjava()}" ></b:navCommandLink>
+                
+            </b:navbarLinks>
+       </b:navBar>
+        <div style="margin-left:40px">
+            <h:form id="formaDodaj" >
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <h1>Dodaj korisnika</h1> <br/>
+                <h:panelGrid columns="2" cellpadding="5" cellspacing="2" width="500px">
+                    <h:outputText value="ID Korisnika" />
+                    <b:inputText disabled="true"  value="#{korisnici.korisnik.korisnici_id}">
+                    </b:inputText>
+                    
+                     <h:outputText value="Korisničko ime: "/>
+                     <b:inputText    value="#{korisnici.korisnik.korIme}" required="true" requiredMessage="Niste unijeli korisničko ime">
+                    </b:inputText>
+                     
+                     <h:outputText value="Lozinka: "/>
+                     <b:inputText   value="#{korisnici.korisnik.lozinka}" required="true" requiredMessage="Niste unijeli lozinku">
+                    </b:inputText>
+                     
+                     <h:outputText value="Ime: "/>
+                     <b:inputText   value="#{korisnici.korisnik.ime}" required="true" requiredMessage="Niste unijeli ime">
+                     <f:validator validatorId="validacijaIme"/>
+                     </b:inputText>
+                     
+                      
+                     <h:outputText value="Prezime: "/>
+                     <b:inputText   value="#{korisnici.korisnik.prezime}" required="true" requiredMessage="Niste unijeli prezime">
+                     <f:validator validatorId="validacijaPrezime"/>
+                     </b:inputText>
+                     
+                     <h:outputText value="Email: "/>
+                     <b:inputText   value="#{korisnici.korisnik.email}" required="true" requiredMessage="Niste unijeli email">
+                     <f:validator validatorId="validacijaEmaila"/>
+                     </b:inputText>
+                      
+                     <h:outputText value="Adresa: "/>
+                     <b:inputText   value="#{korisnici.korisnik.adresa}" required="true" requiredMessage="Niste unijeli adresu">
+                    </b:inputText>
+                
+                     <h:outputText value="Tip korisnika: "/>
+                     <b:selectOneMenu  value="#{korisnici.korisnik.tip_korisnika}">
+                         <f:selectItem itemLabel="Administrator" itemValue="Admin"/>
+                         <f:selectItem itemLabel="Obični korisnik" itemValue="Korisnik"/>
+                    </b:selectOneMenu>
+                    
+                     <b:commandButton value="Dodaj korisnika"  process="@this,formaDodaj"  icon="ui-icon-disk"   actionListener="#{korisnici.dodajKorisnika()}" onclick="document.location('adminStranica.xhtml')" update="growl"  />
+                      
+                </h:panelGrid>
+            </h:form>
+        </div>
+            <div id="footer">
+               Muhamed Handukić &copy; 2016
+            </div>
+    
+    </h:body>
+</html>
+

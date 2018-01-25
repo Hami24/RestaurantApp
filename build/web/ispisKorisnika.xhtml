@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pregled korisnici</title>
+        <style>
+                 #footer
+                 {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    padding: 1rem;
+                    background-color: #efefef;
+                    text-align: center;
+                    height:50px;
+                 }
+        </style>
+    </h:head>
+    <h:body>
+        <b:navBar  brandHref="#"   fluid="true">
+        
+            <b:navbarLinks>
+                <b:navLink value="Početna" href="adminStranica.xhtml" icon="home"></b:navLink>
+                <b:dropMenu value="Korisnici" iconAwesome="user">
+                <b:navLink value="Dodaj korisnika" href="dodajKorisnika.xhtml"></b:navLink> 
+                <b:navLink value="Ispis korisnika" href="ispisKorisnika.xhtml"></b:navLink>
+                </b:dropMenu>
+                <b:dropMenu value="Rezervacije" iconAwesome="glass">
+                <b:navLink value="Prikaz rezervacija" href="ispisRezervacija.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Narudzbe" iconAwesome="envelope-o">
+                <b:navLink value="Prikaz narudzbi" href="ispisNarudzbi.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Jelovnik" iconAwesome="list-alt">
+                <b:navLink value="Prikaz jela" href="ispisJela.xhtml"></b:navLink>
+                <b:navLink value="Dodaj jelo" href="dodajJelo.xhtml"></b:navLink>  
+                </b:dropMenu>
+                <b:dropMenu value="Stolovi" iconAwesome="list-alt">
+                <b:navLink value="Prikaz stolova" href="prikazStolova.xhtml"></b:navLink>
+                <b:navLink value="Dodaj stol" href="dodajStol.xhtml"></b:navLink>   
+                </b:dropMenu>
+            </b:navbarLinks>
+            <b:navbarLinks pull="right">
+                <b:navCommandLink iconAwesome="sign-out" value="Odjava" action="#{prijava.odjava()}" ></b:navCommandLink>
+                
+            </b:navbarLinks>
+       </b:navBar>
+        
+        <h2>Ispis korisnika</h2>
+            <h:form id="forma1">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:dialog modal="true" id="korDialog" widgetVar="korWgt" width="300 px" >
+                <h:panelGrid id="korGrid" columns="2">
+                    <h:outputText value="Korisnik id: "/>
+                    <h:inputText disabled="true" value="#{korisnici.korisnik.korisnici_id}"/>
+                    
+                    <h:outputText value="Korisničko ime: "/>
+                    <h:inputText disabled="true" value="#{korisnici.korisnik.korIme}" required="true" requiredMessage="Niste unijeli korisničko ime"/>
+                  
+                    <h:outputText value="Lozinka: "/>
+                    <h:inputText  value="#{korisnici.korisnik.lozinka}" required="true" requiredMessage="Niste unijeli lozinku"/>
+                    
+                    <h:outputText value="Ime: "/>
+                    <h:inputText  value="#{korisnici.korisnik.ime}" required="true" requiredMessage="Niste unijeli ime">
+                    <f:validator validatorId="validacijaIme"/>
+                    </h:inputText>
+                    
+                    <h:outputText value="Prezime: "/>
+                    <h:inputText  value="#{korisnici.korisnik.prezime}" required="true" requiredMessage="Niste unijeli prezime">
+                    <f:validator validatorId="validacijaPrezime"/>
+                    </h:inputText>
+                    <h:outputText value="Email: "/>
+                    <h:inputText  value="#{korisnici.korisnik.email}" required="true" requiredMessage="Niste unijeli email">
+                    <f:validator validatorId="validacijaEmaila"/>
+                    </h:inputText>
+                    
+                    
+                    <h:outputText value="Adresa: "/>
+                    <h:inputText  value="#{korisnici.korisnik.adresa}" required="true" requiredMessage="Niste unijeli adresu"/>
+                    
+                    
+                   <h:outputText value="Tip korisnika: "/>
+                     <b:selectOneMenu  value="#{korisnici.korisnik.tip_korisnika}">
+                         <f:selectItem itemLabel="Administrator" itemValue="Admin"/>
+                         <f:selectItem itemLabel="Obični korisnik" itemValue="Korisnik"/>
+                    </b:selectOneMenu>
+                </h:panelGrid>
+                
+                <f:facet name="footer">
+                    <p:commandButton value="SNIMI" icon="ui-icon-disk" process="@this,korGrid" update=":forma2:korTable,growl" 
+                                     actionListener="#{korisnici.snimi()}" onclick="document.location('ispisKorisnika.xhtml')" />
+                </f:facet>
+            </p:dialog>
+            </h:form>
+            <h:form id="forma2">
+            <b:dataTable responsive="true" styleClass="table table-striped " id="korTable" var="k" value="#{korisnici.kors}" >
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Ime"/>
+                     </f:facet>
+                     <h:outputText value="#{k.ime}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Prezime"/>
+                     </f:facet>
+                     <h:outputText value="#{k.prezime}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Korisničko ime:"/>
+                     </f:facet>
+                     <h:outputText value="#{k.korIme}"/>
+                 </h:column>
+                
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Email"/>
+                     </f:facet>
+                     <h:outputText value="#{k.email}"/>
+                 </h:column>
+              
+                <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Adresa"/>
+                     </f:facet>
+                     <h:outputText value="#{k.adresa}"/>
+                 </h:column>
+                
+                 <h:column>
+                     <f:facet name="header">
+                         <h:outputText value="Tip korisnika"/>
+                     </f:facet>
+                     <h:outputText value="#{k.tip_korisnika}"/>
+                 </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                   <h:outputText value=""/>
+                    </f:facet>
+                    <p:commandButton value="Uredi korisnika" icon="ui-icon-pencil" actionListener="#{korisnici.urediKorisnika(k)}"
+                                     partialSubmit="true" process="@this" update=":forma1:korDialog" oncomplete="PF('korWgt').show()"/>
+                 </h:column>   
+                
+                
+                <h:column>
+                    <f:facet name="header">
+                   <h:outputText value=""/>
+                    </f:facet>
+                    <p:commandButton value="Obrisi korisnika" icon="ui-icon-trash" actionListener="#{korisnici.obrisiKorisnika(k)}"
+                                     partialSubmit="true"   process="@this" update=":forma2:korTable" onclick="window.location('ispisKorisnika.xhtml')"  />
+                      
+                </h:column>
+            </b:dataTable>
+             </h:form>
+     <div id="footer">
+               Muhamed Handukić &copy; 2016
+            </div>
+        
+    </h:body>
+</html>
+
